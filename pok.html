@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Pokemon</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
   <div class="container mt-5">
@@ -37,6 +38,9 @@
     </div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script>
     function search() {
       var searchType = document.getElementById('searchType').value;
@@ -63,7 +67,22 @@
       });
     }
 
+    function showDetails(apiUrl) {
+      $.get(apiUrl, function(data) {
+        var abilities = data.abilities.map(function(ability) {
+          return ability.ability.name;
+        }).join(', ');
 
+        var modalContent = `
+          <p><strong>Altura:</strong> ${data.height}</p>
+          <p><strong>Peso:</strong> ${data.weight}</p>
+          <p><strong>Habilidades:</strong> ${abilities}</p>
+        `;
+
+        $('#modalContent').html(modalContent);
+        $('#modal').modal('show');
+      });
+    }
   </script>
 </body>
 </html>
